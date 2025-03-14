@@ -1,0 +1,196 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local function createGui()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = playerGui
+
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Parent = screenGui
+    mainFrame.Size = UDim2.new(0, 350, 0, 300)
+    mainFrame.Position = UDim2.new(0.5, -175, 0.5, -150)
+    mainFrame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+    mainFrame.Active = true
+    mainFrame.Draggable = true
+    mainFrame.Visible = true
+
+    local UICorner = Instance.new("UICorner")
+    UICorner.Parent = mainFrame
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Parent = mainFrame
+    titleLabel.Size = UDim2.new(1, 0, 0, 30)
+    titleLabel.Position = UDim2.new(0, 0, 0, 10)
+    titleLabel.Text = "SUPRA MM2 SCRIPT"
+    titleLabel.TextColor3 = Color3.new(1, 1, 1)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Font = Enum.Font.SourceSansBold
+    titleLabel.TextSize = 20
+
+    local subtitleLabel = Instance.new("TextLabel")
+    subtitleLabel.Parent = mainFrame
+    subtitleLabel.Size = UDim2.new(1, 0, 0, 20)
+    subtitleLabel.Position = UDim2.new(0, 0, 0, 40)
+    subtitleLabel.Text = "- MM2 Stuff"
+    subtitleLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+    subtitleLabel.BackgroundTransparency = 1
+    subtitleLabel.Font = Enum.Font.SourceSans
+    subtitleLabel.TextSize = 16
+
+    local scrollFrame = Instance.new("ScrollingFrame")
+    scrollFrame.Parent = mainFrame
+    scrollFrame.Size = UDim2.new(1, 0, 0.7, 0)
+    scrollFrame.Position = UDim2.new(0, 0, 0.2, 0)
+    scrollFrame.BackgroundTransparency = 1
+    scrollFrame.ScrollBarThickness = 5
+    scrollFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0)
+
+    local function createButtonRow(button1Name, button1Script, button2Name, button2Script, yPosition)
+        if button1Name ~= "" then
+            local button1 = Instance.new("TextButton")
+            button1.Parent = scrollFrame
+            button1.Size = UDim2.new(0.4, 0, 0, 40)
+            button1.Position = UDim2.new(0.05, 0, yPosition, 0)
+            button1.Text = button1Name
+            button1.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+            button1.TextColor3 = Color3.new(1, 1, 1)
+            button1.Font = Enum.Font.SourceSans
+            button1.TextSize = 18
+
+            local button1Corner = Instance.new("UICorner")
+            button1Corner.Parent = button1
+
+            button1.MouseButton1Click:Connect(function()
+                loadstring(button1Script)()
+            end)
+        end
+
+        if button2Name ~= "" then
+            local button2 = Instance.new("TextButton")
+            button2.Parent = scrollFrame
+            button2.Size = UDim2.new(0.4, 0, 0, 40)
+            button2.Position = UDim2.new(0.55, 0, yPosition, 0)
+            button2.Text = button2Name
+            button2.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+            button2.TextColor3 = Color3.new(1, 1, 1)
+            button2.Font = Enum.Font.SourceSans
+            button2.TextSize = 18
+
+            local button2Corner = Instance.new("UICorner")
+            button2Corner.Parent = button2
+
+            button2.MouseButton1Click:Connect(function()
+                loadstring(button2Script)()
+            end)
+        end
+    end
+
+    createButtonRow("kill all ( Murder )", [[
+        if game.Players.LocalPlayer.Backpack:FindFirstChild("Knife") ~= nil or game.Workspace[game.Players.LocalPlayer.Name]:FindFirstChild("Knife") ~= nil then
+            local players = game:GetService("Players")
+            for _, player in pairs(players:GetPlayers()) do
+                if player.Name ~= game.Players.LocalPlayer.Name then
+                    repeat wait()
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
+                    until player.Character.Humanoid.Health == 0
+                end
+            end
+        end
+    ]], "ESP", [[
+        loadstring(game:HttpGet("https://pastefy.app/hp1tuEg4/raw"))()
+    ]], 0)
+
+    createButtonRow("Auto Grab Gun", [[
+        loadstring(game:HttpGet("https://pastefy.app/UGoYnOH7/raw"))()
+    ]], "Godmode", [[
+        game.Players.LocalPlayer.Character.Humanoid:Remove()
+        Instance.new('Humanoid', game.Players.LocalPlayer.Character)
+        game:GetService("Workspace")[game.Players.LocalPlayer.Name]:FindFirstChildOfClass('Humanoid').HipHeight = 2
+    ]], 0.1)
+
+    local teleportsLabel = Instance.new("TextLabel")
+    teleportsLabel.Parent = scrollFrame
+    teleportsLabel.Size = UDim2.new(1, 0, 0, 20)
+    teleportsLabel.Position = UDim2.new(0, 0, 0.2, 0)
+    teleportsLabel.Text = "- Teleports"
+    teleportsLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+    teleportsLabel.BackgroundTransparency = 1
+    teleportsLabel.Font = Enum.Font.SourceSans
+    teleportsLabel.TextSize = 16
+
+    createButtonRow("tp to sherrif", [[
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            if player.Backpack:FindFirstChild("Gun") ~= nil or game.Workspace[player.Name]:FindFirstChild("Gun") ~= nil then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+                break
+            end
+        end
+    ]], "tp to murder", [[
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            if player.Backpack:FindFirstChild("Knife") ~= nil or game.Workspace[player.Name]:FindFirstChild("Knife") ~= nil then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+                break
+            end
+        end
+    ]], 0.3)
+
+    createButtonRow("Tp to Lobby", [[
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-108.5, 145, 0.6)
+    ]], "", "", 0.4)
+
+    local moreLabel = Instance.new("TextLabel")
+    moreLabel.Parent = scrollFrame
+    moreLabel.Size = UDim2.new(1, 0, 0, 20)
+    moreLabel.Position = UDim2.new(0, 0, 0.5, 0)
+    moreLabel.Text = "- More !"
+    moreLabel.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+    moreLabel.BackgroundTransparency = 1
+    moreLabel.Font = Enum.Font.SourceSans
+    moreLabel.TextSize = 16
+
+    createButtonRow("Coins Farm", [[
+        loadstring(game:HttpGet("https://pastefy.app/vFMSHD7h/raw"))()
+    ]], "BanHammer ( Fling )", [[
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Super-XXX-Source/BanHammer/main/BanHammerFE"))()
+    ]], 0.6)
+
+    createButtonRow("Katana Tool", [[
+        _G.tablet = game:GetObjects('rbxassetid://14052995337')[1]
+        _G.tablet.Parent = game.Players.LocalPlayer.Backpack
+        _G.tablet.Equipped:Connect(function()
+            local Sound = Instance.new("Sound") 
+            local Id = "32347162"
+            Sound.Parent = game.Workspace
+            Sound.SoundId = "rbxassetid://"..Id
+            Sound.Playing = true
+            Sound.Looped = false
+            Sound.Volume = 0
+        end)
+    ]], "Fly", [[
+        loadstring(game:HttpGet("https://pastefy.app/DyU515oh/raw"))()
+    ]], 0.7)
+
+    local toggleButton = Instance.new("TextButton")
+    toggleButton.Parent = screenGui
+    toggleButton.Size = UDim2.new(0, 100, 0, 40)
+    toggleButton.Position = UDim2.new(0, 10, 0, 10)
+    toggleButton.Text = "Show/Hide"
+    toggleButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    toggleButton.TextColor3 = Color3.new(1, 1, 1)
+    toggleButton.Font = Enum.Font.SourceSans
+    toggleButton.TextSize = 18
+
+    local toggleButtonCorner = Instance.new("UICorner")
+    toggleButtonCorner.Parent = toggleButton
+
+    toggleButton.MouseButton1Click:Connect(function()
+        mainFrame.Visible = not mainFrame.Visible
+    end)
+end
+
+createGui()
+
+player.CharacterAdded:Connect(function()
+    wait(1)
+    createGui()
+end)
